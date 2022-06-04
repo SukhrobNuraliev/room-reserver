@@ -2,7 +2,7 @@
 
 Requirements
 
-- Preferably - MySql.
+- MySql.
 
 
 Change db configuration in connections.php file.

@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if (empty($reservations) || $status == 'free') {
+    if (($status == 'free' || empty($reservations)) && $from < $till) {
         /* create tenant */
         $tenant_data = [
             'name' => $name,
@@ -62,9 +62,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /* send an email */
         $subject = "Room reservation";
         $message = "You have reserved room" . $room_id . " from " . $from . " till " . $till;
-        mail ($email, $subject, $message, 'my@email.com');
+        //mail ($email, $subject, $message, 'my@email.com');
 
-    } else {
+    }
+
+    if ($from > $till){
+        $_SESSION['success'] = 'Invalid date: From should be earlier than Till';
+    }
+
+    if ($status == 'reserved'){
         $_SESSION['tenant'] = $tenant;
         $_SESSION['reservation'] = $existingReservation;
     }

@@ -2,9 +2,8 @@
 
 require 'connection.php';
 
-try {
-    /* create tables */
-    $sql = "CREATE TABLE IF NOT EXISTS tenants (
+/* create tables */
+$sql = "CREATE TABLE IF NOT EXISTS tenants (
         id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(30) NOT NULL,
         email VARCHAR(50) UNIQUE,
@@ -24,20 +23,17 @@ try {
         reserved_till DATETIME NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );";
-    $pdo->exec($sql);
+$pdo->exec($sql);
 
 
-    /* create 5 rooms */
-    foreach (range(1, 5) as $number) {
-        /* if room does not already exist */
-        if ($pdo->query("SELECT number FROM rooms WHERE number = $number")->fetch() == null) {
-            $pdo->exec("INSERT INTO rooms (number) VALUES ($number)");
-        }
+/* create 5 rooms */
+foreach (range(1, 5) as $number) {
+    /* if room does not already exist */
+    if ($pdo->query("SELECT number FROM rooms WHERE number = $number")->fetch() == null) {
+        $pdo->exec("INSERT INTO rooms (number) VALUES ($number)");
     }
-
-    header("Location: index.php");
-    exit();
-
-} catch (PDOException $e) {
-    echo $sql . "<br>" . $e->getMessage();
 }
+
+header("Location: /");
+exit();
+

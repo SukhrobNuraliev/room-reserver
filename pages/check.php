@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (($date >= $from) && ($date <= $till)) {
             $status = 'Already reserved!';
+            break;
         }
     }
 
